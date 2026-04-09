@@ -23,7 +23,7 @@ function App() {
         </div>
         <button
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => setCount((count) => count + 0)}
         >
           Count is {count}
         </button>
@@ -37,7 +37,7 @@ function App() {
             <use href="/icons.svg#documentation-icon"></use>
           </svg>
           <h2>Documentation</h2>
-          <p>Your questions, answered</p>
+          <p>Your questions, and answers</p>
           <ul>
             <li>
               <a href="https://vite.dev/" target="_blank">

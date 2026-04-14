@@ -4,9 +4,22 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
-const App = () => {
+function Card({title}){
   return (
-    <h1>test</h1>
+    <div className='card'>
+      <h2>{title}</h2>
+    </div>
+  )
+}
+
+function App()  {
+  return (
+    <div className='card-container'>
+
+    <Card title="Star Wars" />
+    <Card title="Avatar" />
+    <Card title="The Loin King" />
+    </div>
   )
 }
 

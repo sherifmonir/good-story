@@ -12,7 +12,7 @@ function Card({title}){
 
   return (
     <div className='card' onClick={() => setCount((prevCount) => prevCount + 1) }>
-      <h2>{title} - {count}<br/>  </h2>
+      <h2>{title} - {count} </h2>
       <button onClick={() => setHasLiked(!hasLiked)}>
         {hasLiked ? '❤️' : '🤍'}
       </button>

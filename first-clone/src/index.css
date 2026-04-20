@@ -1,253 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  code {
-    @apply font-mono text-sm bg-zinc-900 text-orange-400 p-1;
-  }
-
-  h1 {
-    @apply text-3xl font-bold text-zinc-50;
-  }
-
-  h2 {
-    @apply text-2xl font-semibold text-zinc-50;
-  }
-
-  main {
-    @apply mx-auto max-w-3xl ring-1 bg-zinc-900 ring-zinc-300/20 xl:max-w-5xl min-h-screen p-10;
-  }
-
-  a {
-    @apply text-indigo-400 hover:text-indigo-500;
-  }
-
-  button {
-    @apply bg-slate-500 hover:bg-slate-600 text-zinc-50 px-4 py-2 rounded-md;
-  }
-
-  pre {
-    @apply font-mono text-sm bg-zinc-900 text-zinc-50 p-4;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding: 40px;
+  background-color: #151515;
+  font-family: "Franklin Gothic Medium", Arial;
+}
+h2 {
+  color: #f3f3f3;
+  text-align: center;
+  font-size: 48px;
 }
 
-@layer components {
-  /* Render Props Pattern */
-  .currency-card {
-    @apply bg-black text-gray-500 p-4 rounded-md shadow-md my-4;
-  }
-
-  .currency-card p:first-child {
-    @apply text-sm !mb-1;
-  }
-
-  .currency-card p:last-child {
-    @apply text-4xl text-indigo-500 font-bold;
-  }
-
-  .currency-container {
-    @apply p-6 bg-black-100 text-white rounded-xl shadow-lg max-w-lg mt-10;
-  }
-
-  .currency-container p:first-child {
-    @apply mb-3 text-gray-500;
-  }
-
-  .currency-container input {
-    @apply p-2 mb-4 text-lg border-none block w-full px-3 py-2 bg-gray-700 border outline-none ring-1 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500;
-  }
-
-  /* Portal Pattern */
-  .portal-btn {
-    @apply bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mt-10;
-  }
-
-  .portal {
-    @apply fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center;
-  }
-
-  .portal div {
-    @apply bg-black rounded-lg shadow-lg w-96 p-6;
-  }
-
-  .portal h2 {
-    @apply text-2xl font-semibold mb-4;
-  }
-
-  .portal p {
-    @apply text-gray-300 mb-6;
-  }
-
-  .portal button {
-    @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded;
-  }
-
-  /* Composition Pattern */
-  .form {
-    @apply space-y-5 mt-10;
-  }
-
-  .form-item {
-    @apply space-y-2;
-  }
-
-  .form-label {
-    @apply block text-sm font-medium text-gray-300;
-  }
-
-  .form-input {
-    @apply block w-full px-3 py-2 bg-gray-700 border outline-none ring-1 rounded-md text-white focus:ring-indigo-500 focus:border-indigo-500;
-  }
-
-  .form-message {
-    @apply text-red-500 text-sm mt-1;
-  }
-
-  .form button {
-    @apply w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600;
-  }
-
-  /* Compound Pattern */
-  .compound {
-    @apply my-10;
-  }
-
-  .tabs-list {
-    @apply flex border-b border-gray-700;
-  }
-
-  .tab {
-    @apply px-4 py-2 rounded-none text-sm font-medium text-white transition-colors bg-black-100 hover:bg-black-200 focus:bg-black-200 focus:outline-none;
-  }
-
-  .tab-active {
-    @apply border-b-2 border-indigo-500 text-white;
-  }
-
-  .tab-inactive {
-    @apply hover:text-gray-200;
-  }
-
-  .tab-panels {
-    @apply mt-4 p-4 bg-black-200 rounded-lg text-gray-300;
-  }
-
-  /* Composition Card Exercise */
-  .card {
-    @apply bg-black-100 text-white rounded-lg shadow-lg p-7 w-fit;
-  }
-
-  .card-header {
-    @apply flex items-start justify-between;
-
-    img {
-      @apply size-20 object-cover rounded-md;
-    }
-  }
-
-  .card-badge {
-    @apply bg-indigo-500 text-white px-2 py-1 rounded-md text-sm;
-  }
-
-  .card-body {
-    @apply mt-4;
-
-    h3 {
-      @apply text-lg font-bold;
-    }
-
-    p {
-      @apply text-sm text-gray-400;
-    }
-  }
-
-  .card-price {
-    @apply mt-2 text-2xl font-bold text-green-500;
-  }
-
-  .card-footer {
-    @apply flex gap-5 mt-4;
-  }
-
-  /* Compound Dropdown Exercise */
-  .dropdown {
-    @apply relative inline-block;
-  }
-
-  .dropdown-trigger {
-    @apply px-3 py-1.5 rounded;
-  }
-
-  .dropdown-menu {
-    @apply absolute right-0 mt-2 w-48 bg-black-100 text-white rounded-lg shadow-lg;
-
-    li {
-      @apply px-4 py-2 hover:bg-black-200;
-    }
-  }
-
-  /* Portal Toast Exercise */
-  .toast {
-    @apply fixed top-4 right-4 bg-black-100 flex flex-col gap-3;
-  }
-
-  .toast-message {
-    @apply text-white px-7 py-2 rounded-lg shadow-lg;
-
-    &.success {
-      @apply bg-green-500;
-
-      &::before {
-        @apply content-['✅'] mr-2;
-      }
-    }
-
-    &.error {
-      @apply bg-red-500;
-
-      &::before {
-        @apply content-['❌'] mr-2;
-      }
-    }
-
-    &.warning {
-      @apply bg-yellow-500;
-
-      &::before {
-        @apply content-['⚠️'] mr-2;
-      }
-    }
-  }
-
-  /* Render Props Table Exercise */
-  table {
-    @apply w-full border border-gray-700 text-white;
-
-    thead {
-      @apply bg-gray-800;
-    }
-
-    th {
-      @apply p-2 text-left border-b border-gray-700;
-    }
-
-    td {
-      @apply p-2 border-b border-gray-700;
-    }
-
-    tr {
-      @apply hover:bg-gray-800;
-    }
-  }
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
-@layer utilities {
-  .container {
-    @apply mx-auto max-w-3xl ring-1 bg-zinc-900 ring-zinc-300/20 xl:max-w-5xl min-h-screen p-10;
-  }
+.card{
+  border: 1px solid #4b5362;
+  padding: 20px;
+  margin: 10px;
+  background-color: #31363f;
+  border-radius: 10px;
+  min-height: 100px;
+}
 
-  .spinner {
-    @apply my-5 animate-spin inline-block size-5 border-2 border-current border-t-transparent text-indigo-600 rounded-full;
-  }
+button {
+  border: none;
+  font-size: 30px;
+  background-color: transparent;
+  width: 100%;
+  text-align: right;
+  cursor: pointer;
 }

@@ -23,7 +23,7 @@ function Card({title}){
 function App()  {
 
   return (
-    <div className='card-container'>
+    <div className="text-3xl font-bold ">
 
     <Card title="Star Wars" />
     <Card title="Avatar" />

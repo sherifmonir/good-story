@@ -23,12 +23,14 @@ function Card({title}){
 function App()  {
 
   return (
-    <div className="text-3xl font-bold ">
-
-    <Card title="Star Wars" />
-    <Card title="Avatar" />
-    <Card title="The Loin King" />
-    </div>
+    <main>
+      <div className="pattern" />
+      <div className="wrapper">
+        <header>
+          <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
+        </header>
+      </div>
+    </main>
   )
 }
 

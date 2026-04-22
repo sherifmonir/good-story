@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
 
 * {
   box-sizing: border-box;
@@ -7,7 +10,7 @@
 }
 
 
-/*@layer base {
+@layer base {
   code {
     @apply font-mono text-sm bg-zinc-900 text-orange-400 p-1;
   }
@@ -39,7 +42,7 @@
 
 @layer components {
   /* Render Props Pattern */
- /* .currency-card {
+ .currency-card {
     @apply bg-black text-gray-500 p-4 rounded-md shadow-md my-4;
   }
 
@@ -52,7 +55,7 @@
   }
 
   .currency-container {
-    @apply p-6 bg-black-100 text-white rounded-xl shadow-lg max-w-lg mt-10;
+    @apply p-6 bg-gray-100 text-white rounded-xl shadow-lg max-w-lg mt-10;
   }
 
   .currency-container p:first-child {
@@ -64,13 +67,13 @@
   }
 
   /* Portal Pattern */
-  /*
+  
   .portal-btn {
     @apply bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mt-10;
   }
 
   .portal {
-    @apply fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center;
+    @apply fixed inset-0 bg-gray-700 bg-black/50 flex justify-center items-center;
   }
 
   .portal div {
@@ -88,9 +91,9 @@
   .portal button {
     @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded;
   }
-*/
+
   /* Composition Pattern */
-  /*
+  
   .form {
     @apply space-y-5 mt-10;
   }
@@ -114,9 +117,9 @@
   .form button {
     @apply w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600;
   }
-*/
+
   /* Compound Pattern */
-  /*
+  
   .compound {
     @apply my-10;
   }
@@ -126,7 +129,7 @@
   }
 
   .tab {
-    @apply px-4 py-2 rounded-none text-sm font-medium text-white transition-colors bg-black-100 hover:bg-black-200 focus:bg-black-200 focus:outline-none;
+    @apply px-4 py-2 rounded-none text-sm font-medium text-white transition-colors bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none;
   }
 
   .tab-active {
@@ -138,13 +141,13 @@
   }
 
   .tab-panels {
-    @apply mt-4 p-4 bg-black-200 rounded-lg text-gray-300;
+    @apply mt-4 p-4 bg-gray-200 rounded-lg text-gray-300;
   }
-*/
+
   /* Composition Card Exercise */
-  /*
+  
   .card {
-    @apply bg-black-100 text-white rounded-lg shadow-lg p-7 w-fit;
+    @apply bg-gray-100 text-white rounded-lg shadow-lg p-7 w-fit;
   }
 
   .card-header {
@@ -178,9 +181,9 @@
   .card-footer {
     @apply flex gap-5 mt-4;
   }
-*/
+
   /* Compound Dropdown Exercise */
-  /*
+  
   .dropdown {
     @apply relative inline-block;
   }
@@ -190,17 +193,17 @@
   }
 
   .dropdown-menu {
-    @apply absolute right-0 mt-2 w-48 bg-black-100 text-white rounded-lg shadow-lg;
+    @apply absolute right-0 mt-2 w-48 bg-gray-100 text-white rounded-lg shadow-lg;
 
     li {
-      @apply px-4 py-2 hover:bg-black-200;
+      @apply px-4 py-2 hover:bg-gray-200;
     }
   }
-*/
+
   /* Portal Toast Exercise */
-  /*
+  
   .toast {
-    @apply fixed top-4 right-4 bg-black-100 flex flex-col gap-3;
+    @apply fixed top-4 right-4 bg-gray-100 flex flex-col gap-3;
   }
 
   .toast-message {
@@ -229,10 +232,10 @@
         @apply content-['⚠️'] mr-2;
       }
     }
-  }*/
+  }
 
   /* Render Props Table Exercise */
-  /*
+  
   table {
     @apply w-full border border-gray-700 text-white;
 
@@ -263,4 +266,3 @@
     @apply my-5 animate-spin inline-block size-5 border-2 border-current border-t-transparent text-indigo-600 rounded-full;
   }
 }
-*/

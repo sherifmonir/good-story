@@ -78,14 +78,14 @@
   }
 
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+    @apply flex items-center w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
 
     & div {
       @apply relative flex items-center;
     }
 
     & img {
-      @apply absolute left-2 h-5 w-5;
+      @apply   h-5 w-5;
     }
 
     & input {

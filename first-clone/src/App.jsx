@@ -2,6 +2,7 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import Search from './components/Search';
+import Spinner from './components/Spinner';
 
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
@@ -29,12 +30,14 @@ useEffect(() => {
 
     try {
       const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
-      const reponse = await fetch(endPoint, API_OPTIONS)
+      const response = await fetch(endPoint, API_OPTIONS)
 
-      if(!reponse.ok){
-        throw new Error(`HTTP error! status: ${reponse.status}`)
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status}`)
+               
+
       }
-      const data = await reponse.json()
+      const data = await response.json()
       if(data.response === 'False'){
         setErrorMessage(data.error || 'failed to fetch movies')
         setMovies([])
@@ -66,14 +69,16 @@ useEffect(() => {
           
           <img src="/hero-img.png" alt="Hero Banner" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
+           <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
         </header>
 
-        <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
+       
         <section className="allMovies">
           <h2>All Movies</h2>
+          
 
           {isLoading ? (
-            <p>Loading movies...</p>  
+            <Spinner />
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           )  : (
@@ -90,7 +95,7 @@ useEffect(() => {
     </main>
   )
 }
-}
+
 
 
 export default App

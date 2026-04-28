@@ -4,27 +4,57 @@ import { useState, useEffect } from 'react'
 import Search from './components/Search';
 
 
-function Card({title}){
-    const [count, setCount] = useState(0)
-    const [hasLiked, setHasLiked] = useState(false)
-
-    useEffect(() => {
-      console.log(`${title} has been liked: ${hasLiked}`)
-    }, [title,hasLiked]);
-
-  return (
-    <div className='card' onClick={() => setCount((prevCount) => prevCount + 1) }>
-      <h2>{title} - {count} </h2>
-      <button onClick={() => setHasLiked(!hasLiked)}>
-        {hasLiked ? '❤️' : '🤍'}
-      </button>
-    </div>
-  )
+const   API_BASE_URL = 'https://api.themoviedb.org/3'
+const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
+const API_OPTIONS = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${API_KEY}`
+  }
 }
 
 function App()  {
 
 const [searchTerm, setSearchTerm] = useState('')
+const [errorMessage, setErrorMessage] = useState('')
+const [movies, setMovies] = useState([])
+const [isLoading, setIsLoading] = useState(false)
+
+
+useEffect(() => {
+  const fetchMovies = async () => {
+    setIsLoading(true)
+    setErrorMessage('')
+
+    try {
+      const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+      const reponse = await fetch(endPoint, API_OPTIONS)
+
+      if(!reponse.ok){
+        throw new Error(`HTTP error! status: ${reponse.status}`)
+      }
+      const data = await reponse.json()
+      if(data.response === 'False'){
+        setErrorMessage(data.error || 'failed to fetch movies')
+        setMovies([])
+        return
+      }
+      setMovies(data.results || [])
+    }
+
+    catch(error){
+      console.error(`Error fetching movies: ${error}`);
+      setErrorMessage(`Failed to fetch movies. Please try again later. ${error}`)
+    }
+
+    finally{
+      setIsLoading(false)
+    }
+  }
+
+  fetchMovies()
+},[]);
 
   return (
     <main>
@@ -39,10 +69,33 @@ const [searchTerm, setSearchTerm] = useState('')
         </header>
 
         <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
+        <section className="allMovies">
+          <h2>All Movies</h2>
 
+          {isLoading ? (
+            <p>Loading movies...</p>  
+          ) : errorMessage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          )  : (
+            <ul>
+              {movies.map(movie => (
+               <p key={movie.id} className="text-white"> {movie.title} </p>
+              ))} 
+
+            </ul>
+          )
+          }
+        </section>
       </div>
     </main>
   )
 }
+}
+
 
 export default App
+
+
+
+
+

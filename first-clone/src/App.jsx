@@ -3,7 +3,7 @@ import './index.css'
 import { useState, useEffect } from 'react'
 import Search from './components/Search';
 import Spinner from './components/Spinner';
-
+import MovieCard from './components/MovieCard';
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
 const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -73,8 +73,8 @@ useEffect(() => {
         </header>
 
        
-        <section className="allMovies">
-          <h2>All Movies</h2>
+        <section className="all-movies">
+          <h2 className="mt-5">All Movies</h2>
           
 
           {isLoading ? (
@@ -83,10 +83,9 @@ useEffect(() => {
             <p className="text-red-500">{errorMessage}</p>
           )  : (
             <ul>
-              {movies.map(movie => (
-               <p key={movie.id} className="text-white"> {movie.title} </p>
-              ))} 
-
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
             </ul>
           )
           }

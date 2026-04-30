@@ -1,6 +1,6 @@
 
 import './index.css'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Search from './components/Search';
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
@@ -23,13 +23,16 @@ const [movies, setMovies] = useState([])
 const [isLoading, setIsLoading] = useState(false)
 
 
-useEffect(() => {
-  const fetchMovies = async () => {
+
+  const fetchMovies = async (query = '') => {
     setIsLoading(true)
     setErrorMessage('')
 
     try {
-      const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+
+      const endPoint = query 
+      ?`${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+      :`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
       const response = await fetch(endPoint, API_OPTIONS)
 
       if(!response.ok){
@@ -56,11 +59,15 @@ useEffect(() => {
     }
   }
 
-  fetchMovies()
-},[]);
+
+useEffect(() => {
+  fetchMovies(searchTerm)
+}, [searchTerm])
+
+
 
   return (
-    <main>
+ <main>
       <div className="pattern">
         <img src="/bg-hero.png" alt="Background" />
       </div>

@@ -5,6 +5,7 @@ import { useDebounce } from 'react-use'
 import  Search from './components/Search';
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
+import { updateSearchCount } from './appwrite';
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
 const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -49,6 +50,7 @@ useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm] )
         return
       }
       setMovies(data.results || [])
+      updateSearchCount()
     }
 
     catch(error){

@@ -22,9 +22,9 @@ export const updateSearchCount = async (searchTerm, movie) => {
             if(result.documents.length > 0) {
                 const doc = result.documents[0]
 
-                await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, {COUNT: doc.COUNT + 1}) 
+                await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, {count: doc.count + 1}) 
             } else {
-                await database.createDocument(DATABASE_ID, TABLE_ID, 'unique()', {searchTerm,
+                await database.createDocument(DATABASE_ID, TABLE_ID, 'ID.unique()', {searchTerm,
                     count: 1,
                     movie_id: movie.id,
                     poster_url: 'https://image.tmdb.org/t/p/w500${movie.poster_path}'})

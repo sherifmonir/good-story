@@ -3,7 +3,7 @@ import {Client, Databases,ID, Query} from 'appwrite'
 const   DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
 const   PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID
 const   ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT
-const   TABLE_ID = "matrics"
+const   TABLE_ID = "metrics"
 
 
 const client = new Client()
@@ -27,7 +27,7 @@ export const updateSearchCount = async (searchTerm, movie) => {
                 await database.createDocument(DATABASE_ID, TABLE_ID, 'ID.unique()', {searchTerm,
                     count: 1,
                     movie_id: movie.id,
-                    poster_url: 'https://image.tmdb.org/t/p/w500${movie.poster_path}'})
+                    poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`})
                 }
 
     } catch (error) {

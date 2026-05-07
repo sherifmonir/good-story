@@ -3,7 +3,7 @@ import {Client, Databases,ID, Query} from 'appwrite'
 const   DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
 const   PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID
 const   ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT
-const   TABLE_ID = "metrics"
+const   TABLE_ID = "matrics"
 
 
 const client = new Client()

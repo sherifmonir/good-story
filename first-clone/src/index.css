@@ -28,7 +28,21 @@
   }
 
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-19;
+    margin: 0 auto;
+    max-width: 56rem;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  @media (min-width: 640px) {
+    h1 {
+      font-size: 64px;
+      line-height: 4.75rem;
+    }
   }
 
   h2 {

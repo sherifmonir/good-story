@@ -89,12 +89,13 @@ useEffect(() => {
   return (
  <main>
       <div className="pattern">
-        <img src="/bg-hero.png" alt="Background" />
+        <img src="/bg-hero.png" alt="Abstract decorative background pattern for movie discovery interface" />
       </div>
       <div className="wrapper">
+        
         <header>
-          
-          <img src="/hero-img.png" alt="Hero Banner" />
+          <img src="/logo.png" alt="Movie discovery application logo" className="size-auto" />
+          <img src="/hero-img.png" alt="Hero banner for movie discovery service featuring promotional imagery" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
            <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
         </header>
@@ -106,7 +107,7 @@ useEffect(() => {
                 {trendingMovies.map((movie, index) => (
                   <li key={movie.$id}>
                     <p>{index + 1}</p>
-                    <img src={movie.poster_url} alt={movie.title} />
+                    <img src={movie.poster_url} alt={`${movie.title} movie poster, ranked ${index + 1} in trending`} />
                   </li>
                 ))}
               </ul>

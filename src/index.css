@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
+
 
 @import "tailwindcss";
 
@@ -14,6 +16,7 @@
   --color-dark-100: #0f0d23;
 
   --font-dm-sans: DM Sans, sans-serif;
+  --font-cinzel: Cinzel, serif;
 
   --breakpoint-xs: 480px;
 
@@ -22,27 +25,13 @@
 
 @layer base {
   body {
-    font-family: "DM Sans", serif;
+    font-family: Cinzel, "DM Sans", serif;
     font-optical-sizing: auto;
     background: #030014;
   }
 
   h1 {
-    margin: 0 auto;
-    max-width: 56rem;
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    color: #ffffff;
-  }
-
-  @media (min-width: 640px) {
-    h1 {
-      font-size: 64px;
-      line-height: 4.75rem;
-    }
+    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
   }
 
   h2 {
@@ -70,6 +59,7 @@
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
+  .site-name {@apply font-cinzel text-6xl font-bold mt-6 bg-gradient-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent}
 
   .trending {
     @apply mt-20;
@@ -79,27 +69,27 @@
     }
 
     & ul li {
-      @apply min-w-57.5 flex flex-row items-center;
+      @apply min-w-[230px] flex flex-row items-center;
     }
 
     & ul li p {
-      @apply fancy-text mt-5.5 text-nowrap;
+      @apply fancy-text mt-[22px] text-nowrap;
     }
 
     & ul li img {
-      @apply w-31.75 h-40.75 rounded-lg object-cover -ml-3.5;
+      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5;
     }
   }
 
   .search {
-    @apply flex items-center w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
+    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
 
     & div {
       @apply relative flex items-center;
     }
 
     & img {
-      @apply   h-5 w-5;
+      @apply absolute left-2 h-5 w-5;
     }
 
     & input {
@@ -111,7 +101,7 @@
     @apply space-y-9;
 
     & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4;
+      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
   }
 
@@ -119,7 +109,7 @@
     @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
 
     & img {
-      @apply rounded-lg h-auto  w-full;
+      @apply rounded-lg h-auto w-full;
     }
 
     & h3 {
@@ -174,4 +164,3 @@
     display: none;
   }
 }
-

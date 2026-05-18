@@ -1,4 +1,6 @@
 import React from 'react'
+import noPoster from "./assets/No-Poster.png"
+import Star from "./assets/Star.svg"
 
 const MovieCard = ({movie:
     {title,vote_average, poster_path, release_date, original_language}}) => {
@@ -6,14 +8,14 @@ const MovieCard = ({movie:
     <div className="movie-card">
         <img
          src={poster_path ? `https://image.tmdb.org/org/t/p/w500${poster_path}`
-        : `/src/assets/No-Poster.png`}
+        :{noPoster}}
     alt={title}
         />
         <div className="mt-4">
             <h3>{title}</h3>
             <div className="content">
                 <div className="rating">
-                    <img src="src/assets/Star.svg" alt="Star Icon" />
+                    <img src={Star} alt="Star Icon" />
                     <p>{vote_average ? vote_average.toFixed(1) : "N/A"}</p>
                 </div>
                 <span>•</span>

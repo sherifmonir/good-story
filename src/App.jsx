@@ -6,6 +6,9 @@ import  Search from './components/Search';
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
 import { updateSearchCount, getTrendingMovies } from './appwrite';
+import logo from "./assets/logo.png"
+import heroImg from "./assets/hero-img.png"
+import bgHero from "./assets/bg-hero.png"
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
 const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -87,14 +90,14 @@ useEffect(() => {
   return (
  <main>
       <div className="pattern">
-        <img src="/src/assets/bg-hero.png" alt="Abstract decorative background pattern for movie discovery interface" />
+        <img src={bgHero} alt="Abstract decorative background pattern for movie discovery interface" />
       </div>
       <div className="wrapper">
         
         <header>
-          <img src="./src/assets/logo.png" alt="Movie discovery application logo" className="size-auto" />
+          <img  src={logo} alt="Movie discovery application logo" className="size-auto" />
           <h1 className="site-name">GoodStory</h1>
-          <img src="/src/assets/hero-img.png" alt="Hero banner for movie discovery service featuring promotional imagery" />
+          <img src={heroImg} alt="Hero banner for movie discovery service featuring promotional imagery" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
            <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
         </header>

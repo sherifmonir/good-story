@@ -92,7 +92,7 @@ useEffect(() => {
       <div className="wrapper">
         
         <header>
-          <img src="/src/assets/logo.png" alt="Movie discovery application logo" className="size-auto" />
+          <img src="./src/assets/logo.png" alt="Movie discovery application logo" className="size-auto" />
           <h1 className="site-name">GoodStory</h1>
           <img src="/src/assets/hero-img.png" alt="Hero banner for movie discovery service featuring promotional imagery" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>

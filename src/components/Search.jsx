@@ -3,7 +3,7 @@ import React from 'react'
 const Search = ({searchTerm,setSearchTerm}) => {
 return (
     <div className='search'>
-            <img src="/search.svg" alt="Magnifying glass icon for searching movies" />
+            <img src="/src/assets/search.svg" alt="Magnifying glass icon for searching movies" />
 
             <input
             type="text" 

@@ -55,9 +55,7 @@ useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm] )
       if(query && data.results.length > 0){
         await updateSearchCount(query, data.results[0])
       }
-    }
-
-    catch(error){
+    } catch(error){
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage(`Failed to fetch movies. Please try again later. ${error}`)
     }
@@ -89,14 +87,14 @@ useEffect(() => {
   return (
  <main>
       <div className="pattern">
-        <img src="/bg-hero.png" alt="Abstract decorative background pattern for movie discovery interface" />
+        <img src="/src/assets/bg-hero.png" alt="Abstract decorative background pattern for movie discovery interface" />
       </div>
       <div className="wrapper">
         
         <header>
-          <img src="/logo.png" alt="Movie discovery application logo" className="size-auto" />
+          <img src="/src/assets/logo.png" alt="Movie discovery application logo" className="size-auto" />
           <h1 className="site-name">GoodStory</h1>
-          <img src="/hero-img.png" alt="Hero banner for movie discovery service featuring promotional imagery" />
+          <img src="/src/assets/hero-img.png" alt="Hero banner for movie discovery service featuring promotional imagery" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
            <Search searchTerm={searchTerm}  setSearchTerm={setSearchTerm} />
         </header>
@@ -124,14 +122,15 @@ useEffect(() => {
             <Spinner />
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
-          )  : (
+          ) : movies.length === 0 ? (
+            <p className="text-white">No Movies Found</p>
+          ) : (
             <ul>
               {movies.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />
               ))}
             </ul>
-          )
-          }
+          )}
         </section>
       </div>
     </main>

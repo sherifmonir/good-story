@@ -1,6 +1,6 @@
 import React from 'react'
-import noPoster from "./assets/No-Poster.png"
-import Star from "./assets/Star.svg"
+import noPoster from "../assets/No-Poster.png"
+import Star from "../assets/Star.svg"
 
 const MovieCard = ({movie:
     {title,vote_average, poster_path, release_date, original_language}}) => {

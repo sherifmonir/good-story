@@ -16,7 +16,7 @@
   --color-dark-100: #0f0d23;
 
   --font-dm-sans: DM Sans, sans-serif;
-  --font-cinzel: Cinzel, serif;
+  --font-cinzel: Cinzel,DM Sans, sans-serif;
 
   --breakpoint-xs: 480px;
 
@@ -26,7 +26,7 @@
 
 @layer base {
   body {
-    font-family:"DM Sans", serif;
+    font-family:"DM Sans", sans-serif, Cinzel;
     font-optical-sizing: auto;
     background: #030014;
   }
@@ -60,7 +60,9 @@
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
-  .site-name {@apply font-cinzel text-6xl font-bold mt-6 bg-gradient-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent}
+  .site-name {
+    @apply font-cinzel  font-bold mt-6 bg-gradient-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent
+  }
 
   .trending {
     @apply mt-20;
@@ -99,7 +101,7 @@
     @apply space-y-9;
 
     & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+      @apply grid grid-cols-1 gap-5 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
   }
 

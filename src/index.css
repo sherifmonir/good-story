@@ -20,7 +20,7 @@
 
   --breakpoint-xs: 480px;
 
-    --background-image-hero-pattern: url("../src/assets/bg-hero.png");
+    --background-image-hero-pattern: url("../src/assets/BG.png");
 
 }
 
@@ -61,7 +61,7 @@
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
   .site-name {
-    @apply font-cinzel  font-bold mt-6 bg-gradient-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent
+    @apply font-cinzel  font-bold mt-6 bg-linear-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent
   }
 
   .trending {

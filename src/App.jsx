@@ -1,14 +1,14 @@
 
 import './index.css'
 import { useEffect, useState } from 'react'
-import { useDebounce } from 'react-use'
+
 import  Search from './components/Search';
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
 import { updateSearchCount, getTrendingMovies } from './appwrite';
 import logo from "./assets/logo.png"
 import heroImg from "./assets/hero-img.png"
-import bgHero from "./assets/bg-hero.png"
+import bgHero from "./assets/BG.png"
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
 const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -21,7 +21,7 @@ const API_OPTIONS = {
 }
 
 function App()  {
-const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
+
 const [searchTerm, setSearchTerm] = useState('')
 const [movies, setMovies] = useState([])
 const [errorMessage, setErrorMessage] = useState('')
@@ -29,7 +29,7 @@ const [isLoading, setIsLoading] = useState(false)
 const [trendingMovies, setTrendingMovies] = useState([])
 
 
-useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm] )
+
 
   const fetchMovies = async (query = '') => {
     setIsLoading(true)
@@ -80,8 +80,8 @@ useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm] )
 
 
 useEffect(() => {
-  fetchMovies(debouncedSearchTerm)
-}, [debouncedSearchTerm])
+  fetchMovies(searchTerm)
+}, [searchTerm])
 
 useEffect(() => {
   loadTrendingMovies()
@@ -118,7 +118,7 @@ useEffect(() => {
   
           </section>
 
-        <section className="all-movies">
+        <section className="all-movies" id="results">
           <h2>All Movies</h2>
           
           {isLoading ? (

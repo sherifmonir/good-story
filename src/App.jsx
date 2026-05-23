@@ -8,7 +8,7 @@ import MovieCard from './components/MovieCard';
 import { updateSearchCount, getTrendingMovies } from './appwrite';
 import logo from "./assets/logo.png"
 import heroImg from "./assets/hero-img.png"
-import bgHero from "./assets/BG.png"
+
 
 const   API_BASE_URL = 'https://api.themoviedb.org/3'
 const   API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -89,11 +89,9 @@ useEffect(() => {
 
   return (
  <main>
-      <div className="pattern">
-        <img src={bgHero} alt="Abstract decorative background pattern for movie discovery interface" />
-      </div>
+      <div className="pattern" /> 
       <div className="wrapper">
-        
+
         <header>
           <img  src={logo} alt="Movie discovery application logo" className="size-auto" />
           <h1 className="site-name">GoodStory</h1>

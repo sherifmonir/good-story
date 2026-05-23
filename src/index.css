@@ -26,7 +26,7 @@
 
 @layer base {
   body {
-    font-family:"DM Sans", sans-serif, Cinzel;
+    font-family:"DM Sans", sans-serif, "Cinzel";
     font-optical-sizing: auto;
     background: #030014;
   }

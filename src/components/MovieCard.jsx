@@ -1,11 +1,13 @@
 import React from 'react'
 import NoPoster from "../assets/No-Poster.png"
 import Star from "../assets/Star.svg"
+import { useNavigate } from 'react-router-dom';
 
 const MovieCard = ({movie:
-    {title,vote_average, poster_path, release_date, original_language}}) => {
+    {id,title,vote_average, poster_path, release_date, original_language}}) => {
+        const navigate = useNavigate();
   return (
-    <div className="movie-card">
+    <div onClick={() => navigate(`/movie/${id}`)} className="movie-card">
         <img
          src={poster_path ? `https://image.tmdb.org/org/t/p/w500${poster_path}`
         :NoPoster}

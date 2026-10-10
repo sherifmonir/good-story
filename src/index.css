@@ -60,6 +60,12 @@
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
+
+
+   /*********Home Page*********/
+  .logo-and-name {
+    @apply cursor-pointer flex-col items-center gap-3 hover:opacity-80 transition-opacity;
+  }
   .site-name {
     @apply font-cinzel  font-bold mt-6 bg-linear-to-r from-[#f2f1f4] to-[#8656ff] bg-clip-text text-transparent
   }
@@ -105,8 +111,65 @@
     }
   }
 
+  .sort-button {
+      @apply  bg-slate-900 text-slate-200 px-2 py-2 rounded-lg border border-slate-700 text-sm focus:outline-none focus:border-cyan-400 transition-colors cursor-pointer;
+}
+
+  .pagenation {
+    @apply flex flex-row items-center justify-center gap-3 mt-10;
+
+    & button {
+      @apply bg-light-100/5 px-3 py-2 rounded-lg text-sm text-gray-200 font-medium hover:bg-light-100/10 transition-colors;
+    }
+
+    & button:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    & span {
+      @apply text-gray-200 font-medium;
+    }
+  }
+  /*********Movie Details*********/
+
+  .movie-details-page {
+    @apply min-h-screen text-white;
+  }
+
+  .Back-to-Search {
+    @apply text-cyan-400 hover:underline mb-6 inline-block;
+  }
+
+  .movie-main-info {
+    @apply flex justify-between items-start gap-4 mb-6;
+  }
+
+  .rating {
+    @apply flex items-center gap-3 bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700;
+  }
+
+  .movie-photo {
+    @apply relative rounded-xl overflow-hidden bg-slate-700  border-slate-800 flex flex-col justify-end min-h-[300px] w-[60%] 
+  }
+
+  .watch-trailer-btn {
+    @apply="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors;
+  }
+
+  .genre {
+    @apply bg-slate-800 text-slate-300 px-3 py-1 rounded-full text-sm border border-slate-700;
+  }
+
+  .visit-homepage-btn {
+    @apply ml-auto bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1 rounded-lg text-sm font-medium transition-colors;
+  }
+
+
+
+
+  /*********Movie Card*********/
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10 cursor-pointer;
 
     & img {
       @apply rounded-lg h-auto w-full;

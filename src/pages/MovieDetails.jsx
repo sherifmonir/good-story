@@ -69,7 +69,7 @@ const MovieDetails = () => {
         <div>
           <h1 className="text-3xl md:text-4xl font-bold">{movie.title}</h1>
           <p className="text-slate-400 text-sm mt-1">
-            {movie.release_date?.split('-')[0]} &bull; {movie.adult ? 'R' : 'PG-13'} &bull; {formatRuntime(movie.runtime)}
+            {movie.release_date?.split('-')[0]} &bull; {formatRuntime(movie.runtime)}
           </p>
         </div>
         

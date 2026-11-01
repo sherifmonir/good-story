@@ -53,3 +53,4 @@ The Movie Details page is similarly page-focused: it reads `id` from the route p
 - `src/Constants/index.js` is the shared home for movie detail labels and formatting; extend that table instead of duplicating repeated detail rows in the page.
 - The app is a client-side React app with no backend server; it relies on browser-side API calls plus Appwrite for the trending count feature.
 - The repository uses Vite defaults and ES modules (`"type": "module"`), so imports and config should follow that pattern.
+- Don't change UI/UX design or layout without prior discussion; the app is intentionally minimal and focused on the movie discovery experience.

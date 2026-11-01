@@ -3,9 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Search from '../components/Search';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
-import { updateSearchCount, getTrendingMovies } from '../appwrite';
-import logo from "../assets/logo.png";
-import heroImg from "../assets/hero-img.png";
 import NoPoster from '../assets/No-Poster.png';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -16,6 +13,12 @@ const API_OPTIONS = {
     accept: 'application/json',
     Authorization: `Bearer ${API_KEY}`
   }
+};
+const TMDB_SORT_MAP = {
+  'popularity.desc': 'popularity.desc',
+  'vote_average.desc': 'vote_average.desc',
+  'release_date.desc': 'primary_release_date.desc',
+  'title.asc': 'original_title.asc'
 };
 
 const Home = () => {
@@ -45,77 +48,77 @@ const Home = () => {
     setSearchParams(params, { replace: true });
   }, [searchTerm, currentPage, sortBy, setSearchParams]);
 
-  const fetchMovies = async (query = '', pageNum = 1, sortOption = 'popularity.desc') => {
-    setIsLoading(true);
-    setErrorMessage('');
+  useEffect(() => {
+    const controller = new AbortController();
+    const fetchMovies = async () => {
+      const query = searchTerm;
+      const pageNum = currentPage;
+      const sortOption = sortBy;
+      setIsLoading(true);
+      setErrorMessage('');
 
-    try {
-      const tmdbSortMap = {
-        'popularity.desc': 'popularity.desc',
-        'vote_average.desc': 'vote_average.desc',
-        'release_date.desc': 'primary_release_date.desc',
-        'title.asc': 'original_title.asc'
-      };
+      try {
+        const activeSort = TMDB_SORT_MAP[sortOption] || 'popularity.desc';
+        const endPoint = query
+          ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${pageNum}`
+          : `${API_BASE_URL}/discover/movie?sort_by=${activeSort}&page=${pageNum}`;
 
-      const activeSort = tmdbSortMap[sortOption] || 'popularity.desc';
+        const response = await fetch(endPoint, { ...API_OPTIONS, signal: controller.signal });
 
-      const endPoint = query 
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${pageNum}`
-        : `${API_BASE_URL}/discover/movie?sort_by=${activeSort}&page=${pageNum}`;
-      
-      const response = await fetch(endPoint, API_OPTIONS);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const results = data.results || [];
+
+        if (query) {
+          results.sort((a, b) => {
+            if (sortOption === 'popularity.desc') return (b.popularity || 0) - (a.popularity || 0);
+            if (sortOption === 'vote_average.desc') return (b.vote_average || 0) - (a.vote_average || 0);
+            if (sortOption === 'release_date.desc') return new Date(b.release_date || 0) - new Date(a.release_date || 0);
+            if (sortOption === 'title.asc') return (a.title || '').localeCompare(b.title || '');
+            return 0;
+          });
+        }
+
+        setMovies(results);
+        setTotalPages(data.total_pages > 500 ? 500 : (data.total_pages || 1));
+
+        if (query && pageNum === 1 && results.length > 0) {
+          void import('../appwrite')
+            .then(({ updateSearchCount }) => updateSearchCount(query, results[0]))
+            .catch((error) => console.error(`Error updating search count: ${error}`));
+        }
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        console.error(`Error fetching movies: ${error}`);
+        setErrorMessage(`Failed to fetch movies. Please try again later.`);
+      } finally {
+        if (!controller.signal.aborted) setIsLoading(false);
       }
-      const data = await response.json();
-      
-      let results = data.results || [];
+    };
 
-      if (query) {
-        results.sort((a, b) => {
-          if (sortOption === 'popularity.desc') return (b.popularity || 0) - (a.popularity || 0);
-          if (sortOption === 'vote_average.desc') return (b.vote_average || 0) - (a.vote_average || 0);
-          if (sortOption === 'release_date.desc') return new Date(b.release_date || 0) - new Date(a.release_date || 0);
-          if (sortOption === 'title.asc') return (a.title || '').localeCompare(b.title || '');
-          return 0;
-        });
-      }
+    void fetchMovies();
+    return () => controller.abort();
+  }, [searchTerm, currentPage, sortBy]);
 
-      setMovies(results);
-      setTotalPages(data.total_pages > 500 ? 500 : (data.total_pages || 1));
-
-      if (query && pageNum === 1 && results.length > 0) {
-        await updateSearchCount(query, results[0]);
-      }
-    } catch (error) {
-      console.error(`Error fetching movies: ${error}`);
-      setErrorMessage(`Failed to fetch movies. Please try again later.`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadTrendingMovies = async () => {
-    try {
-      const trending = await getTrendingMovies();
-      setTrendingMovies(trending);
-    } catch (error) {
-      console.error(`Error fetching trending movies: ${error}`);
-    }
-  };
-
-  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
   useEffect(() => {
-    fetchMovies(searchTerm, currentPage, sortBy);
-  }, [searchTerm, currentPage, sortBy]);
+    let active = true;
+    void import('../appwrite')
+      .then(({ getTrendingMovies }) => getTrendingMovies())
+      .then((trending) => {
+        if (active && trending) setTrendingMovies(trending);
+      })
+      .catch((error) => console.error(`Error fetching trending movies: ${error}`));
 
-  useEffect(() => {
-    loadTrendingMovies();
+    return () => {
+      active = false;
+    };
   }, []);
 
   const handlePageChange = (newPage) => {
@@ -138,13 +141,25 @@ const Home = () => {
           onClick={handleResetHome}
           className="logo-and-name"
         >
-          <img src={logo} alt="Movie discovery application logo" className="size-auto" />
+          <img
+            src="/logo.svg"
+            alt="Movie discovery application logo"
+            width="91"
+            height="66"
+            className="size-auto"
+          />
           <h1 className="site-name">Good Story</h1>
         </div>
 
-        <img src={heroImg} alt="Hero banner for movie discovery service featuring promotional imagery" />
+        <img
+          src="/hero-img.webp"
+          alt="Hero banner for movie discovery service featuring promotional imagery"
+          width="472"
+          height="439"
+          fetchPriority="high"
+        />
         <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without The Hassle</h1>
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Search setSearchTerm={setSearchTerm} />
       </header>
 
       <section className="trending">
@@ -161,6 +176,10 @@ const Home = () => {
                 <img 
                   src={movie.poster_url || NoPoster} 
                   alt={`${movie.title} movie poster, ranked ${index + 1} in trending`}
+                  width="127"
+                  height="163"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => { e.target.src = NoPoster; }}
                 />
               </li>

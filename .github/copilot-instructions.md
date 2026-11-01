@@ -2,12 +2,12 @@
 
 ## Project overview
 
-Good Story is a Vite + React movie discovery app. The app boots in `src/main.jsx` with `BrowserRouter`, and the route tree is:
+Good Story is a Vite + React movie discovery app. The app boots in `src/main.jsx` with `BrowserRouter`; `src/App.jsx` defines the route tree:
 
 - `/` -> `src/pages/Home.jsx`
-- `/movie/:id` -> `src/pages/MovieDetails.jsx`
+- `/movie/:id` -> lazy-loaded `src/pages/MovieDetails.jsx`
 
-The shared app shell in `src/App.jsx` renders the page layout and the routed content via `Outlet`. Most UI state is page-local and kept in React hooks, while the URL syncs critical filters such as search query, page number, and sort option.
+The shared app shell in `src/App.jsx` renders the page layout and routed content via `Outlet`. Most UI state is page-local and kept in React hooks, while the URL syncs critical filters such as search query, page number, and sort option.
 
 The data flow is split between two external services:
 
@@ -21,10 +21,11 @@ Use the repository commands from the project root:
 - Install dependencies: `npm install`
 - Start local dev server: `npm run dev`
 - Production build: `npm run build`
+- Run the Vitest suite: `npm test`
 - Lint the codebase: `npm run lint`
 - Preview production build: `npm run preview`
 
-There is no automated test runner configured in `package.json` and no test files in the repository right now, so there is currently no repository-supported single-test command to run. If a test runner is introduced later, prefer executing the targeted file rather than the full suite.
+Tests use Vitest, React Testing Library, and jsdom. The route and movie-feature tests are in `src/App.test.jsx`, with DOM setup in `src/test/setup.js`. Mock TMDB and Appwrite calls in tests rather than depending on external network services.
 
 ## Architecture and code organization
 
@@ -40,16 +41,17 @@ The Home page is the main orchestration point:
 - It reads `searchParams` from the URL and initializes local state from them.
 - It calls the TMDB search/discover endpoints with a mapped sort option.
 - It updates the URL when query/page/sort changes.
-- It triggers `updateSearchCount()` for initial searches so Appwrite counts can drive the trending section.
+- It lazy-loads Appwrite operations for trending movies and search analytics so they do not increase the initial JavaScript bundle.
 
-The Movie Details page is similarly page-focused: it reads `id` from the route params, fetches a single movie with credits and videos, and renders metadata from a shared table config plus optional trailer links.
+The Movie Details page is similarly page-focused: it reads `id` from the route params, fetches a single movie with credits and videos, and renders metadata from a shared table config plus optional trailer links. It is lazy-loaded by the route.
 
 ## Conventions specific to this repository
 
 - Use `import.meta.env` for environment variables. The app expects `VITE_TMDB_API_KEY`, `VITE_APPWRITE_DATABASE_ID`, `VITE_APPWRITE_PROJECT_ID`, and `VITE_APPWRITE_ENDPOINT`.
 - Avoid hardcoding TMDB or Appwrite configuration values in components; keep those values in env setup and the Appwrite client initializer.
 - Search results are intentionally synced to the URL (`query`, `page`, `sort`) to preserve navigation state; follow that pattern if you add more filters.
-- When rendering images from TMDB, use the standard `https://image.tmdb.org/t/p/...` patterns and keep the local fallback assets (`No-Poster.png`, `No-Photo.png`) as the default for missing media.
+- When rendering images from TMDB, use the standard `https://image.tmdb.org/t/p/...` patterns. Movie cards use `w342` posters and lazy loading; detail-page images use appropriately sized TMDB images. Use the existing local fallbacks (`src/assets/No-Poster.png`, `src/assets/No-Photo.jpg`) when media is missing.
+- Keep static assets optimized and use the existing self-hosted fonts in `public/fonts/`; preload fonts and route-specific hero imagery only where they are needed.
 - `src/Constants/index.js` is the shared home for movie detail labels and formatting; extend that table instead of duplicating repeated detail rows in the page.
 - The app is a client-side React app with no backend server; it relies on browser-side API calls plus Appwrite for the trending count feature.
 - The repository uses Vite defaults and ES modules (`"type": "module"`), so imports and config should follow that pattern.

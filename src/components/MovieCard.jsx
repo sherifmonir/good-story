@@ -1,17 +1,19 @@
-import React from 'react'
 import NoPoster from "../assets/No-Poster.png"
 import Star from "../assets/Star.svg"
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MovieCard = ({movie:
     {id,title,vote_average, poster_path, release_date, original_language}}) => {
-        const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(`/movie/${id}`)} className="movie-card">
+    <li>
+      <Link to={`/movie/${id}`} className="movie-card block">
         <img
-         src={poster_path ? `https://image.tmdb.org/org/t/p/w500${poster_path}`
-        :NoPoster}
-    alt={title}
+         src={poster_path ? `https://image.tmdb.org/t/p/w342${poster_path}` : NoPoster}
+         alt={title}
+         width="342"
+         height="513"
+         loading="lazy"
+         decoding="async"
         />
         <div className="mt-4">
             <h3>{title}</h3>
@@ -27,7 +29,8 @@ const MovieCard = ({movie:
 
             </div>
         </div>
-    </div>
+      </Link>
+    </li>
   )
 }
 

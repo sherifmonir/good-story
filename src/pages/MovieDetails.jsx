@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import NoPoster from '../assets/No-Poster.png';
-import NoPhoto from '../assets/No-Photo.png';
+import NoPhoto from '../assets/No-Photo.jpg';
 import { DetailsTable } from '../Constants';
 
 
@@ -23,28 +23,32 @@ const MovieDetails = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchMovieDetails = async () => {
       setIsLoading(true);
+      setErrorMessage('');
       try {
         
         const response = await fetch(
           `${API_BASE_URL}/movie/${id}?append_to_response=credits,videos&language=en-US`,
-          API_OPTIONS
+          { ...API_OPTIONS, signal: controller.signal }
         );
 
         if (!response.ok) throw new Error('Failed to fetch movie details.');
         const data = await response.json();
         setMovie(data);
       } catch (error) {
+        if (controller.signal.aborted) return;
         console.error(error);
         setErrorMessage('Could not load movie details. Please try again later.');
       } finally {
-        setIsLoading(false);
+        if (!controller.signal.aborted) setIsLoading(false);
       }
     };
 
-    fetchMovieDetails();
+    void fetchMovieDetails();
     window.scrollTo(0, 0); 
+    return () => controller.abort();
   }, [id]);
 
   if (isLoading) return <div className="min-h-screen flex justify-center items-center"><Spinner /></div>;
@@ -86,16 +90,24 @@ const MovieDetails = () => {
       
       <div className="flex justify-between w-full mb-6">
         <img 
-          src={movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : NoPoster} 
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : NoPoster}
           alt={movie.title}
+          width="500"
+          height="750"
+          fetchPriority="high"
+          decoding="async"
           onError={(e) => { e.target.src = NoPoster; }}
           className="rounded-xl shadow-lg  object-cover max-h-112.5 w-[40%]" 
         />
         
         <div className="movie-photo">
           <img 
-            src={movie.backdrop_path ? `https://image.tmdb.org/t/p/original/${movie.backdrop_path}` : NoPhoto} 
+            src={movie.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}` : NoPhoto}
             alt="Backdrop"
+            width="1280"
+            height="720"
+            fetchPriority="high"
+            decoding="async"
             onError={(e) => { e.target.src = NoPhoto; }}
             className="absolute inset-0 w-full h-full object-cover " 
           />
